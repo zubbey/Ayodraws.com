@@ -1,0 +1,12 @@
+{
+    "name": "zubbey/kelechinwaneri.com",
+    "authors": [
+        {
+            "name": "zubbey",
+            "email": "com.zubbey@hotmail.com"
+        }
+    ],
+    "require": {
+      "ext-mysqli": "*"
+    }
+}
