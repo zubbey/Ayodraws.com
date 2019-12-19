@@ -13,7 +13,6 @@ let home_logo = document.querySelector(".ms-logo");
 
 if(home){
     title_el.innerHTML = "Home | kelechinwaneri.com";
-    home_logo.style.height = "100%";
 }
 if(about){
     title_el.innerHTML = "About Kelechi | kelechinwaneri.com";
