@@ -570,12 +570,14 @@ p {
     margin-bottom: 2rem !important;
 }
 .ms-preloader {
-    width: 20%;
-    height: 20%;
-    position: fixed;
+    width: 5%;
+    height: 5%;
+    position: absolute;
     z-index: 8;
-    top: 0;
+    margin-left: auto;
+    margin-right: auto;
     left: 0;
+    right: 0;
     background: url("../images/loader_skype_trans.gif") no-repeat;
     background-size: contain;
 }

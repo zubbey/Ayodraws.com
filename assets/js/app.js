@@ -5,6 +5,8 @@ let contact = document.URL.indexOf("/contact") >= 0;
 let gallery = document.URL.indexOf("/gallery") >= 0;
 let admin = document.URL.indexOf("/admin") >= 0;
 let paintings = document.URL.indexOf("/paintings") >= 0;
+let shows = document.URL.indexOf("/shows") >= 0;
+let shows_details = document.URL.indexOf("/shows-details") >= 0;
 
 let title_el = document.querySelector("title");
 let home_logo = document.querySelector(".ms-logo");
@@ -27,6 +29,12 @@ if(admin){
 }
 if(paintings){
     title_el.innerHTML = "Paintings | kelechinwaneri.com";
+}
+if(shows){
+    title_el.innerHTML = "Shows | kelechinwaneri.com";
+}
+if(shows_details){
+    title_el.innerHTML = "Shows Details | kelechinwaneri.com";
 }
 
 function queryParameters () {

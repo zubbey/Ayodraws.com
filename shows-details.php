@@ -9,8 +9,8 @@ require('./components/menu-light.php');
     <!-- Page Title -->
     <div class="ms-section__block">
         <div class="ms-page-title">
-            <h2 class="page-header">2020 - Krisitin Hjellegjerde Gallery, “ALL THE DAYS AND NIGHTS”, Old York Road, London, Britain.</h2>
-            <div class="post-item__date">February 27th - 18th April</div>
+            <h2 class="page-header">2019 - SMO Contemporary Art Gallery “STASIS”, Temple Muse, Victoria Island Lagos, Nigeria.</h2>
+            <div class="post-item__date">Date: 2019</div>
         </div>
     </div>
     <!-- Page Content -->
@@ -28,7 +28,7 @@ require('./components/menu-light.php');
                         <!-- Branded Twitter button -->
 
                         <a class="share-btn share-btn-branded share-btn-twitter"
-                           href="https://twitter.com/share?url=http%3A%2F%2Fkelechinwaneri.com%2Fshows-details&text=2020 - Krisitin Hjellegjerde Gallery, “ALL THE DAYS AND NIGHTS”, Old York Road, London, Britain&via=KAECYART"
+                           href="https://twitter.com/share?url=http%3A%2F%2Fkelechinwaneri.com%2Fshows-details&text=2019 - SMO Contemporary Art Gallery “STASIS”, Temple Muse, Victoria Island Lagos, Nigeria.”, Old York Road, London, Britain&via=KAECYART"
                            title="Share on Twitter">
                             <span class="share-btn-icon"></span>
                             <span class="share-btn-text">Twitter</span>
@@ -40,14 +40,6 @@ require('./components/menu-light.php');
                            title="Share on Facebook">
                             <span class="share-btn-icon"></span>
                             <span class="share-btn-text">Facebook</span>
-                        </a>
-
-                        <!-- Branded Google+ button -->
-                        <a class="share-btn share-btn-branded share-btn-googleplus"
-                           href="https://plus.google.com/share?url=http%3A%2F%2Fkelechinwaneri.com%2Fshows-details"
-                           title="Share on Google+">
-                            <span class="share-btn-icon"></span>
-                            <span class="share-btn-text">Google+</span>
                         </a>
 
                         <!-- Branded LinkedIn button -->
