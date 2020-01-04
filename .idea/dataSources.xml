@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="kelechinwaneri_database@localhost" uuid="f44f7376-6d1a-4a2b-8851-171a43665812">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/kelechinwaneri_database</jdbc-url>
+      <driver-properties>
+        <property name="serverTimezone" value="GMT+1" />
+      </driver-properties>
+    </data-source>
+  </component>
+</project>

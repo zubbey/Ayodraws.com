@@ -84,3 +84,33 @@ body {
 }
 
 /*# sourceMappingURL=admin.css.map */
+
+/*login style*/
+input:focus,
+textarea:focus {
+  outline: none !important;
+  border: 1px solid #df1f29;
+  box-shadow: none;
+}
+input[type="submit"] {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+input[type="submit"]:focus {
+  outline: none;
+}
+input[type=checkbox]:checked{
+  background-color: #df1f29 !important;
+}
+input[type=radio]:checked{
+  background-color: #df1f29 !important;
+}

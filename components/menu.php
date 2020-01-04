@@ -27,7 +27,7 @@
 <body>
 <div class="ms-main-container">
     <!-- Preloader -->
-    <div class="ms-preloader"></div>
+<!--    <div class="ms-preloader"></div>-->
     <!-- Header -->
     <header class="ms-header navbar-white">
         <nav class="ms-nav">
@@ -56,20 +56,20 @@
                     <li class="nav-item">
                         <a href="paintings" data-type="page-transition">
                             <span class="ms-btn">paintings</span>
-                            <span class="nav-item__label">View all our works</span>
+                            <span class="nav-item__label">View my works</span>
                         </a>
                     </li>
                     <!-- Nav Link -->
-                    <li class="nav-item">
-                        <a href="gallery" data-type="page-transition">
-                            <span class="ms-btn">gallery</span>
-                            <span class="nav-item__label">Interactively disintermediate</span>
-                        </a>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a href="gallery" data-type="page-transition">-->
+<!--                            <span class="ms-btn">gallery</span>-->
+<!--                            <span class="nav-item__label">Interactively disintermediate</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
                     <!-- Nav Link -->
                     <li class="nav-item">
                         <a href="shows" data-type="page-transition">
-                            <span class="ms-btn">Shows</span>
+                            <span class="ms-btn">Exhibitions</span>
                             <span class="nav-item__label">Discover fascinating stories</span>
                         </a>
                     </li>
@@ -77,14 +77,14 @@
                     <li class="nav-item">
                         <a href="about" data-type="page-transition">
                             <span class="ms-btn">about</span>
-                            <span class="nav-item__label">Learn more about the author</span>
+                            <span class="nav-item__label">Learn more about the me</span>
                         </a>
                     </li>
                     <!-- Nav Link -->
                     <li class="nav-item">
                         <a href="contact" data-type="page-transition">
                             <span class="ms-btn">contact</span>
-                            <span class="nav-item__label">Get in touch and find us</span>
+                            <span class="nav-item__label">Get in touch with me</span>
                         </a>
                     </li>
                 </ul>

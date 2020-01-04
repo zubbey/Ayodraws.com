@@ -29,36 +29,38 @@ require('./components/menu-light.php');
             <div class="filtr-container row">
                 <!-- Album item -->
                 <?php
-                $sqlImg = "SELECT image_link, category FROM painting WHERE category = 'Ageing Planet Series'";
+                $sqlImg = "SELECT * FROM painting WHERE category = 'Ageing Planet Series'";
                 $resultGallery = mysqli_query($conn, $sqlImg);
                 while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
                     echo '
                     <div class="album-item col-md-4 filtr-item" data-category="1">
-                        <a href="gallery" data-type="page-transition">
+                        <a href="painting-details?painting_id='.$imgRow['id'].'" data-type="page-transition">
                             <div class="album-item__overlay">
                                 <span class="album-item__cover"></span>
                                 <h5 class="category">'.$imgRow['category'].'</h5>
                             </div>
                             <div class="album-item__img" style="background-image: url('.$imgRow['image_link'].')"></div>
                         </a>
+                        <h6 class="page-header">'.$imgRow['image_name'].'</h6>
                     </div>
                     ';
                 }
                 ?>
                 <!-- Album item -->
                 <?php
-                $sqlImg = "SELECT image_link, category FROM painting WHERE category = 'depths of solitude Series'";
+                $sqlImg = "SELECT * FROM painting WHERE category = 'depths of solitude Series'";
                 $resultGallery = mysqli_query($conn, $sqlImg);
                 while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
                     echo '
                     <div class="album-item col-md-4 filtr-item" data-category="2">
-                    <a href="gallery" data-type="page-transition">
+                    <a href="painting-details?painting_id='.$imgRow['id'].'" data-type="page-transition">
                         <div class="album-item__overlay">
                             <span class="album-item__cover"></span>
                             <h5 class="category">'.$imgRow['category'].'</h5>
                         </div>
                         <div class="album-item__img" style="background-image: url('.$imgRow['image_link'].')"></div>
                     </a>
+                    <h6 class="page-header">'.$imgRow['image_name'].'</h6>
                 </div>
                     ';
                 }
@@ -66,54 +68,57 @@ require('./components/menu-light.php');
 
                 <!-- Album item -->
                 <?php
-                $sqlImg = "SELECT image_link, category FROM painting WHERE category = 'Hyperrealism'";
+                $sqlImg = "SELECT * FROM painting WHERE category = 'Hyperrealism'";
                 $resultGallery = mysqli_query($conn, $sqlImg);
                 while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
                     echo '
                     <div class="album-item col-md-4 filtr-item" data-category="3">
-                    <a href="gallery" data-type="page-transition">
+                    <a href="painting-details?painting_id='.$imgRow['id'].'" data-type="page-transition">
                         <div class="album-item__overlay">
                             <span class="album-item__cover"></span>
                             <h5 class="category">'.$imgRow['category'].'</h5>
                         </div>
                         <div class="album-item__img" style="background-image: url('.$imgRow['image_link'].')"></div>
                     </a>
+                    <h6 class="page-header">'.$imgRow['image_name'].'</h6>
                 </div>
                     ';
                 }
                 ?>
 
                 <?php
-                $sqlImg = "SELECT image_link, category FROM painting WHERE category = 'Masked Series'";
+                $sqlImg = "SELECT * FROM painting WHERE category = 'Masked Series'";
                 $resultGallery = mysqli_query($conn, $sqlImg);
                 while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
                     echo '
                     <div class="album-item col-md-4 filtr-item" data-category="4">
-                    <a href="gallery" data-type="page-transition">
+                    <a href="painting-details?painting_id='.$imgRow['id'].'" data-type="page-transition">
                         <div class="album-item__overlay">
                             <span class="album-item__cover"></span>
                             <h5 class="category">'.$imgRow['category'].'</h5>
                         </div>
                         <div class="album-item__img" style="background-image: url('.$imgRow['image_link'].')"></div>
                     </a>
+                    <h6 class="page-header">'.$imgRow['image_name'].'</h6>
                 </div>
                     ';
                 }
                 ?>
 
                 <?php
-                $sqlImg = "SELECT image_link, category FROM painting WHERE category = 'Other Paintings'";
+                $sqlImg = "SELECT * FROM painting WHERE category = 'Other Paintings'";
                 $resultGallery = mysqli_query($conn, $sqlImg);
                 while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
                     echo '
                     <div class="album-item col-md-4 filtr-item" data-category="5">
-                    <a href="gallery" data-type="page-transition">
+                    <a href="painting-details?painting_id='.$imgRow['id'].'" data-type="page-transition">
                         <div class="album-item__overlay">
                             <span class="album-item__cover"></span>
                             <h5 class="category">'.$imgRow['category'].'</h5>
                         </div>
                         <div class="album-item__img" style="background-image: url('.$imgRow['image_link'].')"></div>
                     </a>
+                    <h6 class="page-header">'.$imgRow['image_name'].'</h6>
                 </div>
                     ';
                 }
@@ -142,7 +147,7 @@ require ('./components/footer-light.php');
     }
     function categoryDesc(x) {
         if (x === 'all'){
-            category_Desc.innerHTML = "Explore my Painting categories";
+            category_Desc.innerHTML = "Explore My Painting Categories";
             category_Heading.innerHTML = "All Paintings";
         }
         if (x === 1){

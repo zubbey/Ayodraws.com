@@ -2,7 +2,6 @@
 let home = document.URL.indexOf("index") >= 0;
 let about = document.URL.indexOf("/about") >= 0;
 let contact = document.URL.indexOf("/contact") >= 0;
-let gallery = document.URL.indexOf("/gallery") >= 0;
 let admin = document.URL.indexOf("/admin") >= 0;
 let paintings = document.URL.indexOf("/paintings") >= 0;
 let shows = document.URL.indexOf("/shows") >= 0;
@@ -19,9 +18,6 @@ if(about){
 }
 if(contact){
     title_el.innerHTML = "Contact | kelechinwaneri.com";
-}
-if(gallery){
-    title_el.innerHTML = "Gallery | kelechinwaneri.com";
 }
 if(admin){
     title_el.innerHTML = "Admin Dashboard | kelechinwaneri.com";

@@ -16,7 +16,7 @@
                             <div class=\"slide-inner--image\" style=\"background-image: url('".$imgRow['image_link']."')\"></div>
                             <div class=\"slide-inner--info\">
                               <h1>".$imgRow['image_name']."</h1>
-                              <a href=\"gallery\" data-type=\"page-transition\" class=\"ms-btn--slider\" style=\"color: #FFF;\">Look up</a>
+                              <a href=\"paintings\" data-type=\"page-transition\" class=\"ms-btn--slider\" style=\"color: #FFF;\">See more</a>
                             </div>
                           </div>
                         </div>";

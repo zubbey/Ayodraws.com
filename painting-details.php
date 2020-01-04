@@ -1,0 +1,81 @@
+<?php
+// AUTH CONTROLLER FOR BACKEND
+require_once ('./controller/authController.php');
+//components
+require('./components/menu-light.php');
+
+if (isset($_GET['painting_id'])){
+    $painting_id = $_GET['painting_id'];
+}
+
+?>
+<?php
+$sqlImg = "SELECT * FROM painting WHERE id = '$painting_id'";
+$resultGallery = mysqli_query($conn, $sqlImg);
+while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
+    $image_link = $imgRow['image_link'];
+    $image_name = $imgRow['image_name'];
+    $image_category = $imgRow['category'];
+    $date = $imgRow['date_uploaded'];
+}
+?>
+    <main class="ms-container">
+        <!-- Page Title -->
+        <div class="ms-section__block">
+            <div class="ms-page-title">
+                <h6 class="page-header"><span>Category:</span> <?php echo $image_category;?></h6>
+                <h2 id="current_painting" class="page-header"><?php echo $image_name;?></h2>
+                <div class="post-item__date">Date: <?php echo $date;?></div>
+            </div>
+        </div>
+        <!-- Page Content -->
+        <div class="ms-section__block">
+            <div id="ms-blog-post" class="row">
+                <div class="col-md-8">
+                    <img src="<?php echo $image_link;?>" alt="img"><br>
+                    <h5 class="mb-3"></h5>
+                    <blockquote>“You don’t need to be a font savant, or be a Creative Cloud wizard, or even have a degree in design in order to be a highly effective product designer.”</blockquote>
+                    <p>Holisticly orchestrate extensible infrastructures without error-free <a href="#" title="link">e-commerce</a>. Authoritatively streamline inexpensive bandwidth for timely convergence. Credibly foster superior imperatives without parallel opportunities. Assertively visualize real-time supply chains before technically sound metrics. Monotonectally architect collaborative resources and superior technology.</p>
+                    <p>Phosfluorescently facilitate alternative e-commerce rather than turnkey ideas. Collaboratively synergize superior best practices with scalable e-business. Uniquely disseminate <a href="#" title="link">B2C</a> collaboration and idea-sharing without end-to-end ROI. Interactively synergize fully researched e-business vis-a-vis multifunctional "outside the box" thinking. Intrinsicly myocardinate corporate functionalities vis-a-vis efficient schemas.</p><br>
+
+                </div>
+
+                <div class="ms-right-sidebar col-md-4">
+                    <div class="col-md-12">
+                        <h5>Related Images</h5>
+                        <div class="col-md-12">
+                        <?php
+                        $sqlImg = "SELECT * FROM painting WHERE category = '$image_category'";
+                        $resultGallery = mysqli_query($conn, $sqlImg);
+                        while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
+                            echo '
+                            <a class="category" href="?painting_id='.$imgRow['id'].'" data-type="page-transition">
+                                <h6 id="painting_name" class="post-item__title">'.$imgRow['image_name'].'</h6>
+                                <div class="post-item__date">'.$imgRow['date_uploaded'].'</div>
+                            </a>
+                            ';
+                        }
+                        ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+<?php
+require ('./components/footer-light.php');
+?>
+
+<script>
+    let current_painting = document.querySelector("#current_painting");
+    let painting_name = document.querySelector("#painting_name");
+
+    // if (current_painting === painting_name){
+    //     category.style.display = "none";
+    // }
+    // function cnt_painting() {
+    //
+    // }
+</script>
