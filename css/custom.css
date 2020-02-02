@@ -1,0 +1,22 @@
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+    color: #555555;
+    text-decoration: none;
+     background: none !important;
+     -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+     box-shadow: none !important;
+}
+/*@media screen and (min-width:768px){*/
+/*    .navbar-brand-centered {*/
+/*        position: absolute;*/
+/*        left: 50%;*/
+/*        display: block;*/
+/*        width: 160px;*/
+/*        text-align: center;*/
+/*        background-color: #eee;*/
+/*    }*/
+/*    .navbar>.container .navbar-brand-centered,*/
+/*    .navbar>.container-fluid .navbar-brand-centered {*/
+/*        margin-left: -80px;*/
+/*    }*/
+/*}*/

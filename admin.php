@@ -81,6 +81,14 @@ if($_SESSION['admin_session']){
             $("#check2").attr("checked", true);
     }
 
+    if (document.URL.indexOf("edit_id") >= 0){
+        $('#edit_content').modal('show');
+        $('#tab3')[0].click();
+    }
+    if (document.URL.indexOf("delete_id") >= 0){
+        $('#delete_content').modal('show');
+    }
+
     function showCategory() {
         var checkBox = document.getElementById("painting");
         var text = document.getElementById("category");
@@ -110,11 +118,29 @@ if($_SESSION['admin_session']){
             timer: 2000
         })
     }
+    if (queryParameters().success === "contentupdated"){
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your content was updated successfully!',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    }
     if (queryParameters().error === "notedited"){
         Swal.fire({
             position: 'center',
             icon: 'error',
             title: 'Their was a problem updating the image!',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    }
+    if (queryParameters().error === "contentnotedited"){
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Their was a problem updating the page content!',
             showConfirmButton: false,
             timer: 2000
         })
@@ -155,4 +181,8 @@ if($_SESSION['admin_session']){
             title: loginMsg
         })
     }
+
+    $(document).ready(function(){
+        $("[data-toggle=tooltip]").tooltip();
+    });
 </script>

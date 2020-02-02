@@ -2,7 +2,7 @@
 // AUTH CONTROLLER FOR BACKEND
 require_once ('./controller/authController.php');
 //components
-require('./components/menu-light.php');
+require('./components/menu.php');
 
 if (isset($_GET['painting_id'])){
     $painting_id = $_GET['painting_id'];
@@ -17,6 +17,7 @@ while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
     $image_name = $imgRow['image_name'];
     $image_category = $imgRow['category'];
     $date = $imgRow['date_uploaded'];
+    $desc = $imgRow['image_description'];
 }
 ?>
     <main class="ms-container">
@@ -32,11 +33,9 @@ while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
         <div class="ms-section__block">
             <div id="ms-blog-post" class="row">
                 <div class="col-md-8">
-                    <img src="<?php echo $image_link;?>" alt="img"><br>
+                    <img class="w-100" src="<?php echo $image_link;?>" alt="img"><br>
                     <h5 class="mb-3"></h5>
-                    <blockquote>“You don’t need to be a font savant, or be a Creative Cloud wizard, or even have a degree in design in order to be a highly effective product designer.”</blockquote>
-                    <p>Holisticly orchestrate extensible infrastructures without error-free <a href="#" title="link">e-commerce</a>. Authoritatively streamline inexpensive bandwidth for timely convergence. Credibly foster superior imperatives without parallel opportunities. Assertively visualize real-time supply chains before technically sound metrics. Monotonectally architect collaborative resources and superior technology.</p>
-                    <p>Phosfluorescently facilitate alternative e-commerce rather than turnkey ideas. Collaboratively synergize superior best practices with scalable e-business. Uniquely disseminate <a href="#" title="link">B2C</a> collaboration and idea-sharing without end-to-end ROI. Interactively synergize fully researched e-business vis-a-vis multifunctional "outside the box" thinking. Intrinsicly myocardinate corporate functionalities vis-a-vis efficient schemas.</p><br>
+                    <p><?php echo $desc;?></p>
 
                 </div>
 
@@ -65,12 +64,36 @@ while ($imgRow = mysqli_fetch_assoc($resultGallery)) {
     </main>
 
 <?php
-require ('./components/footer-light.php');
+require ('./components/footer.php');
 ?>
 
-<script>
-    let current_painting = document.querySelector("#current_painting");
-    let painting_name = document.querySelector("#painting_name");
+<script type="text/javascript">
+    const current_painting = document.querySelector("#current_painting");
+    const painting_name = document.querySelector("#painting_name");
+
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    function getUrlKey() {
+        var urlKey = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key) {
+            urlKey[key] = key;
+        });
+        return urlKey;
+    }
+    const painting_id = getUrlVars()["painting_id"];
+    if (!painting_id){
+        if (getUrlVars()["subscribeEmail"]){
+            const subscribe = getUrlKey()["subscribeEmail"];
+            window.location.assign('paintings?'+subscribe+'=true');
+        } else {
+            window.location.assign('paintings');
+        }
+    }
 
     // if (current_painting === painting_name){
     //     category.style.display = "none";

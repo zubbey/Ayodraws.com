@@ -13,7 +13,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     exit();
 }$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 
-//admin login
+
 // initializing variables
 $errors =  array();
 $username= "";
@@ -96,9 +96,10 @@ if (isset($_GET['update_image_painting'])) {
     $id = $_GET['imageid'];
     $table = $_GET['table'];
     $image_name = $_GET['image_name'];
+    $desc= mysqli_real_escape_string($conn, $_GET['image_desc']);
     $category = $_GET['category'];
 
-    $updateQuery = mysqli_query($conn, "UPDATE $table SET image_name = '$image_name', category = '$category' WHERE id = '$id'");
+    $updateQuery = mysqli_query($conn, "UPDATE $table SET image_name = '$image_name', category = '$category', image_description = '$desc' WHERE id = '$id'");
     if ($updateQuery) {
         header('location: ?edit=true&table=painting&success=imageUpdated');
         exit();
@@ -111,7 +112,7 @@ if (isset($_GET['update_image_painting'])) {
 if (isset($_GET['update_image_others'])){
     $id = $_GET['imageid'];
     $table = $_GET['table'];
-    $image_name = $_GET['image_name'];
+    $image_name = mysqli_real_escape_string($conn, $_GET['image_name']);
 
     $updateQuery = mysqli_query($conn, "UPDATE $table SET image_name = '$image_name' WHERE id = '$id'");
     if ($updateQuery) {
@@ -138,10 +139,154 @@ if ($_GET['deleteId']) {
     }
 }
 
+//FOR Subscribers
+function subcribe_email($conn, $email, $visitor_ip){
+    $date = date("Y-m-d");
+    if (!empty($email)){
+        $sql = "INSERT INTO subscribed_emails (email, ip_address, subscribed_date) VALUES('$email', '$visitor_ip', '$date')";
+        $result = mysqli_query($conn, $sql);
+        if($result){
+            header("Location: ?success=subscribed");
+        }
+    } else{
+        header("Location: ?error=empty");
+    }
+}
 if (isset($_POST['contact-btn'])){
     echo 'data received!';
 }
 
+//UPDATING PAGE CONTENT
+if (isset($_POST['update_content_btn'])){
+    $heading = mysqli_real_escape_string($conn, $_POST['heading']);
+    $body = mysqli_real_escape_string($conn, $_POST['body']);
+    $id = $_POST['id'];
+
+    $updateQuery = mysqli_query($conn, "UPDATE page_content SET heading = '$heading', body = '$body' WHERE id = '$id'");
+    if ($updateQuery) {
+        header('location: ?success=contentupdated');
+        exit();
+    } else {
+        header('location: ?error=contentnotedited');
+        exit();
+    }
+}
+//COUNT TOTAL UPLOADED IMAGES
+function total_uploads($conn){
+    $sql = "SELECT COUNT(*) FROM painting";
+    if ($result=mysqli_query($conn, $sql)){
+        $row= mysqli_fetch_array($result);
+        $rowcount = $row[0];
+        mysqli_free_result($result);
+    }
+    return $rowcount;
+}
+//COUNT TOTAL VISITORS AND VISITED PAGES
+function unique_ip($conn){
+    $sql = "select count(distinct visitor_ip) as visitors
+from page_views";
+    if ($result=mysqli_query($conn, $sql)){
+        $row= mysqli_fetch_array($result);
+        $rowcount = $row[0];
+        mysqli_free_result($result);
+    }
+    return $rowcount;
+}
+
+function total_views($conn, $page_id = null)
+{
+    if($page_id === null)
+    {
+        // count total website views
+        $query = "SELECT sum(total_views) as total_views FROM pages";
+        $result = mysqli_query($conn, $query);
+
+        if(mysqli_num_rows($result) > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                if($row['total_views'] === null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return $row['total_views'];
+                }
+            }
+        }
+        else
+        {
+            return "No records found!";
+        }
+    }
+    else
+    {
+        // count specific page views
+        $query = "SELECT total_views FROM pages WHERE id='$page_id'";
+        $result = mysqli_query($conn, $query);
+
+        if(mysqli_num_rows($result) > 0)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                if($row['total_views'] === null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return $row['total_views'];
+                }
+            }
+        }
+        else
+        {
+            return "No records found!";
+        }
+    }
+}
+
+function is_unique_view($conn, $visitor_ip, $page_id)
+{
+    $query = "SELECT * FROM page_views WHERE visitor_ip='$visitor_ip' AND page_id='$page_id'";
+    $result = mysqli_query($conn, $query);
+
+    if(mysqli_num_rows($result) > 0)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+function add_view($conn, $visitor_ip, $page_id)
+{
+    if(is_unique_view($conn, $visitor_ip, $page_id) === true)
+    {
+        // insert unique visitor record for checking whether the visit is unique or not in future.
+        $query = "INSERT INTO page_views (visitor_ip, page_id) VALUES ('$visitor_ip', '$page_id')";
+
+        if(mysqli_query($conn, $query))
+        {
+            // At this point unique visitor record is created successfully. Now update total_views of specific page.
+            $query = "UPDATE pages SET total_views = total_views + 1 WHERE id='$page_id'";
+
+            if(!mysqli_query($conn, $query))
+            {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
+        }
+        else
+        {
+            echo "Error inserting record: " . mysqli_error($conn);
+        }
+    }
+}
+
+//LOGOUT ADMIN
 if (isset($_GET['logout'])) {
     $id = $_SESSION['id'];
     $time = time();

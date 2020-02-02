@@ -10,7 +10,7 @@
                 if ($row['heading'] === "facebook"){
                     $facebook = "<i class=\"fab fa-facebook-square\"></i>";
                 }
-                echo '<li><a href="https://'.$row['body'].'" class="socicon-facebook" target="_blank">'.$facebook.'</a></li>';
+                echo '<li><a href="https://'.$row['body'].'" class="" target="_blank">'.$facebook.'</a></li>';
             }
             $sql = "SELECT * FROM page_content WHERE id = 5";
             $result = mysqli_query($conn, $sql);
@@ -18,12 +18,12 @@
                 if ($row['heading'] === "instagram"){
                     $instagram = "<i class=\"fab fa-instagram\"></i>";
                 }
-                echo '<li><a href="https://instagram.com/'.$row['body'].'" class="socicon-facebook" target="_blank">'.$instagram.'</a></li>';
+                echo '<li><a href="https://instagram.com/'.$row['body'].'" class="" target="_blank">'.$instagram.'</a></li>';
             }
             mysqli_close($conn);
             ?>
-<!--            <li><a href="#" class="socicon-twitter"></a><i class="fab fa-twitter"></i></li>-->
-<!--            <li><a href="#" class="socicon-youtube"></a><i class="fab fa-youtube-square"></i></li>-->
+            <!--            <li><a href="#" class="socicon-twitter"></a><i class="fab fa-twitter"></i></li>-->
+            <!--            <li><a href="#" class="socicon-youtube"></a><i class="fab fa-youtube-square"></i></li>-->
         </ul>
     </div>
 </footer>

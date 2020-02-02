@@ -130,8 +130,13 @@
                         echo '<form method="GET" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
                         echo '<div class="modal-body">';
                         echo '<div class="form-group">';
-                        echo '<h5 class="py-3">Change Image name</h5>';
-                        echo '<input name="image_name" type="text" class="form-control form-control-lg mb-0" value="' . $imgRow['image_name'] . '">';
+                        echo '<label for="imageName">Image name</label>';
+                        echo '<input id="imageName" name="image_name" type="text" class="form-control form-control-lg mb-0" value="' . $imgRow['image_name'] . '">';
+                        echo '</div>';
+                        echo '<div class="form-group mt-4">';
+                        echo '<label for="imageDesc">Image Description</label>';
+                        echo '<textarea name="image_desc" class="form-control" id="imageDesc" rows="3">' . $imgRow['image_description'] . '</textarea>';
+                        echo '</div>';
                         echo '<input name="table" type="hidden" value="' . $table . '">';
                         echo '<input name="imageid" type="hidden" value="' . $imageid . '">';
                         echo '
@@ -147,24 +152,23 @@
                         </select>
                       </div>
                         ';
-                        echo '</div>';
-                        echo '</div>';
                         echo '<div class="modal-footer">';
-                        echo '<button class="btn btn-primary" type="submit" name="update_image_painting">Update <i class="fas fa-pencil-alt"></i></button>';
+                        echo '<button class="btn btn-primary w-100" type="submit" name="update_image_painting">Update <i class="fas fa-pencil-alt"></i></button>';
+                        echo '</div>';
                         echo '</div>';
                         echo '</form>';
                     } else {
                         echo '<form method="GET" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '">';
                         echo '<div class="modal-body">';
                         echo '<div class="form-group">';
-                        echo '<h5 class="py-3">Change Image name</h5>';
-                        echo '<input name="image_name" type="text" class="form-control form-control-lg mb-0" value="' . $imgRow['image_name'] . '">';
+                        echo '<label for="imageName">Image name</label>';
+                        echo '<input id="imageName" name="image_name" type="text" class="form-control form-control-lg mb-0" value="' . $imgRow['image_name'] . '">';
+                        echo '</div>';
                         echo '<input name="table" type="hidden" value="' . $table . '">';
                         echo '<input name="imageid" type="hidden" value="' . $imageid . '">';
-                        echo '</div>';
-                        echo '</div>';
                         echo '<div class="modal-footer">';
                         echo '<button class="btn btn-primary" type="submit" name="update_image_others">Update <i class="fas fa-pencil-alt"></i></button>';
+                        echo '</div>';
                         echo '</div>';
                         echo '</form>';
                     }
@@ -175,6 +179,71 @@
 
         </div>
     </div>
+</div>
+
+<!--EDIT PAGE CONTENT-->
+<?php
+if (isset($_GET['edit_id'])){
+    $id = $_GET['edit_id'];
+}
+
+$sql = "SELECT * FROM page_content WHERE id = '$id'";
+$result = mysqli_query($conn, $sql);
+while ($row = mysqli_fetch_assoc($result)) {
+    $heading = mysqli_real_escape_string($conn, $row['heading']);
+    $body = mysqli_real_escape_string($conn, $row['body']);
+}
+?>
+
+<div class="modal fade" id="edit_content" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="page-header custom_align" id="Heading">Edit this Content</h4>
+            </div>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input name="heading" class="form-control " type="text" value="<?php echo $heading; ?>">
+                        <input name="id" type="hidden" value="<?php echo $id; ?>">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="body" rows="4" class="form-control"><?php echo $body; ?></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button name="update_content_btn" type="submit" class="btn btn-primary btn-lg" style="width: 100%;"><span class="fas fa-save"></span> Update</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal fade" id="delete_content" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 
 <div class="ms-container">
@@ -196,7 +265,7 @@
                         <i class="fas fa-edit"></i> Edit Page Contents
                     </a>
                     <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
-                        <i class="fas fa-edit"></i> Edit Prints
+                        <i class="fas fa-edit"></i> Subscribers
                     </a>
                     <a onclick="location.assign('?logout=true')" href="#" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6" aria-selected="false">
                         <i class="fas fa-sign-out-alt"></i> Sign out
@@ -213,8 +282,11 @@
                                 <!-- Page Title -->
                                 <div class="ms-section__block">
                                     <div class="ms-page-title">
-                                        <h4 class="page-header font-weight-bold">Total Visitors</h4>
-                                        <p class="page-desc">you have 0.0 Visitors</p>
+                                        <h4 class="page-header font-weight-bold">Total Visitors View</h4>
+                                        <?php
+                                        $total_website_views = unique_ip($conn); // Returns total website views
+                                        echo "<p class='page-desc w-100'>You have <span class='font-weight-bold'> " . $total_website_views . "</span> Views</p>";
+                                        ?>
                                     </div>
                                 </div>
                             </main>
@@ -225,7 +297,10 @@
                                 <div class="ms-section__block">
                                     <div class="ms-page-title">
                                         <h4 class="page-header font-weight-bold">Total Uploaded Artwork</h4>
-                                        <p class="page-desc">you Uploaded 40 Images</p>
+                                        <?php
+                                        $total_artworks = total_uploads($conn); // Returns total website views
+                                        echo "<p class='page-desc w-100'>You have uploaded <span class='font-weight-bold'> " . $total_artworks . "</span> Artworks</p>";
+                                        ?>
                                     </div>
                                 </div>
                             </main>
@@ -265,6 +340,55 @@
                                     <div class="ms-page-title">
                                         <h2 class="page-header">Edit Page contents</h2>
                                         <p class="page-desc">Modify or add more content </p>
+
+                                        <div class="container">
+                                            <div class="row">
+
+
+                                                <div class="col-md-12">
+                                                    <div class="table-responsive">
+
+                                                        <table id="mytable" class="table table-bordred table-striped">
+
+                                                            <thead>
+
+                                                            <th>N/S</th>
+                                                            <th>heading</th>
+                                                            <th>body</th>
+                                                            <th>Edit</th>
+
+                                                            <th>Delete</th>
+                                                            </thead>
+                                                            <tbody>
+
+                                                            <?php
+                                                            $sql = "SELECT * FROM page_content ORDER BY id";
+                                                            $result = mysqli_query($conn, $sql);
+                                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                                echo '
+                                                                    <tr>
+                                                                        <td>'.$row['id'].'</td>
+                                                                        <td>'. mysqli_real_escape_string($conn, $row['heading']) .'</td>
+                                                                        <td>'. mysqli_real_escape_string($conn, $row['body']) .'</td>
+                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
+                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
+                                                                    </tr>
+                                                                ';
+                                                            }
+                                                            ?>
+
+                                                            </tbody>
+
+                                                        </table>
+
+                                                        <div class="clearfix"></div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </main>
@@ -279,8 +403,41 @@
                                 <!-- Page Title -->
                                 <div class="ms-section__block">
                                     <div class="ms-page-title">
-                                        <h2 class="page-header">Edit Page contents</h2>
-                                        <p class="page-desc">Edit print page</p>
+                                        <h2 class="page-header">Subscribed Email Address</h2>
+
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">id</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">iP Address</th>
+                                                <th scope="col">Issued Date</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+
+                                            $sql = "SELECT * FROM subscribed_emails ORDER BY id";
+                                            $result = mysqli_query($conn, $sql);
+                                            if(mysqli_num_rows($result) > 0){
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo '
+                                                    <tr>
+                                                        <th scope="row">'.$row['id'].'</th>
+                                                        <td>'.$row['email'].'</td>
+                                                        <td>'.$row['ip_address'].'</td>
+                                                        <td>'.$row['subscribed_date'].'</td>
+                                                    </tr>
+                                                ';
+                                                }
+                                                echo "<caption>List of subscribed email</caption>";
+                                            } else {
+                                                echo "<caption>You Have 0 Subscriber</caption>";
+                                            }
+                                            ?>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </main>

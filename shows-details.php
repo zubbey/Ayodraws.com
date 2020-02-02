@@ -2,7 +2,7 @@
 // AUTH CONTROLLER FOR BACKEND
 require_once ('./controller/authController.php');
 //components
-require('./components/menu-light.php');
+require('./components/menu.php');
 ?>
 
 <main class="ms-container">
@@ -104,7 +104,7 @@ require('./components/menu-light.php');
 
 
 <?php
-require ('./components/footer-light.php');
+require ('./components/footer.php');
 ?>
 <script>
     (function(){

@@ -8,7 +8,7 @@
 
     window.onpageshow = function(event) {
       if (event.persisted) {
-          PageTransition(); 
+          PageTransition();
       }
     };
 
@@ -101,7 +101,7 @@ function Menu() {
     function ms_home_slider() {
         if ($.exists('.swiper-container')) {
             var swiper = new Swiper('.swiper-container', {
-            loop: false,
+            loop: true,
             speed: 1000,
             grabCursor: false,
             mousewheel: true,

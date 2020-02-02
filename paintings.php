@@ -2,7 +2,11 @@
 // AUTH CONTROLLER FOR BACKEND
 require_once ('./controller/authController.php');
 //components
-require('./components/menu-light.php');
+require('./components/menu.php');
+$page_id = 2;
+$visitor_ip = $_SERVER['REMOTE_ADDR']; // stores IP address of visitor in variable
+add_view($conn, $visitor_ip, $page_id);
+
 ?>
 
 <main class="ms-container">
@@ -122,7 +126,6 @@ require('./components/menu-light.php');
                 </div>
                     ';
                 }
-//                mysqli_close($conn);
                 ?>
 
             </div>
@@ -131,7 +134,7 @@ require('./components/menu-light.php');
 </main>
 
 <?php
-require ('./components/footer-light.php');
+require ('./components/footer.php');
 ?>
 <script>
     let category_Desc = document.querySelector("p.page-desc");
