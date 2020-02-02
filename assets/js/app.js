@@ -1,6 +1,6 @@
 
 // Home | KELECHINWANERI.COM
-const index = document.URL.indexOf("http://kelechinwaneri.com/") >= 0;
+const index = document.URL.indexOf("/") >= 0;
 const home = document.URL.indexOf("index") >= 0;
 const about = document.URL.indexOf("/about") >= 0;
 const contact = document.URL.indexOf("/contact") >= 0;
