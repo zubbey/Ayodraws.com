@@ -89,8 +89,8 @@
                                         echo '<p class="card-text">category: '.$imgRow['category'].'</p>';
                                     }
                                     echo '
-                                            <a href="?editId='.$imgRow['id'].'&table='.$table.'" class="ms-button" data-title="Edit" data-type="page-transition">Edit <i class="fas fa-pencil-alt"></i></a>
-                                            <a href="?deleteId='.$imgRow['id'].'&table='.$table.'" class="ms-button" data-title="Drop" data-type="page-transition">Delete <i class="fas fa-trash-alt"></i></a>
+                                            <a href="?editId='.$imgRow['id'].'&table='.$table.'" class="ms-button">Edit <i class="fas fa-pencil-alt"></i></a>
+                                            <a href="?deleteId='.$imgRow['id'].'&table='.$table.'" class="ms-button">Delete <i class="fas fa-trash-alt"></i></a>
                                         </div>
                                     </div>
                                         
@@ -183,6 +183,14 @@
 
 <!--EDIT PAGE CONTENT-->
 <?php
+//Initializing Sanitize
+function sanitize($str){
+    if (get_magic_quotes_gpc()) $str=stripslashes($str);
+    if (function_exists('mysql_real_escape_string')) {
+        return mysql_real_escape_string($str);
+    } else return addslashes($str);
+}
+
 if (isset($_GET['edit_id'])){
     $id = $_GET['edit_id'];
 }
@@ -190,8 +198,8 @@ if (isset($_GET['edit_id'])){
 $sql = "SELECT * FROM page_content WHERE id = '$id'";
 $result = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_assoc($result)) {
-    $heading = mysqli_real_escape_string($conn, $row['heading']);
-    $body = mysqli_real_escape_string($conn, $row['body']);
+    $heading = sanitize($row['heading']);
+    $body = sanitize($row['body']);
 }
 ?>
 
@@ -284,7 +292,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <div class="ms-page-title">
                                         <h4 class="page-header font-weight-bold">Total Visitors View</h4>
                                         <?php
-                                        $total_website_views = unique_ip($conn); // Returns total website views
+                                        $total_website_views = total_views($conn); // Returns total website views
                                         echo "<p class='page-desc w-100'>You have <span class='font-weight-bold'> " . $total_website_views . "</span> Views</p>";
                                         ?>
                                     </div>
@@ -318,7 +326,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     <div class="ms-page-title">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h2 class="page-header">Upload images</h2>
-                                            <a onclick="location.assign('?edit=true&table=painting')" class="ms-button" data-title="Edit now" data-type="page-transition">Edit Uploaded</a>
+                                            <a onclick="location.assign('?edit=true&table=painting')" class="ms-button">Edit Uploaded</a>
                                         </div>
                                         <p class="page-desc">Simply upload images to Kelechi Nwaneri database</p>
                                     </div>
@@ -362,14 +370,15 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                             <tbody>
 
                                                             <?php
+
                                                             $sql = "SELECT * FROM page_content ORDER BY id";
                                                             $result = mysqli_query($conn, $sql);
                                                             while ($row = mysqli_fetch_assoc($result)) {
                                                                 echo '
                                                                     <tr>
                                                                         <td>'.$row['id'].'</td>
-                                                                        <td>'. mysqli_real_escape_string($conn, $row['heading']) .'</td>
-                                                                        <td>'. mysqli_real_escape_string($conn, $row['body']) .'</td>
+                                                                        <td>'. sanitize($row['heading']) .'</td>
+                                                                        <td>'. sanitize($row['body']) .'</td>
                                                                         <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
                                                                         <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
                                                                     </tr>

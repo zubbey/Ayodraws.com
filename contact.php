@@ -12,7 +12,7 @@ add_view($conn, $visitor_ip, $page_id);
         <div class="ms-section__block">
             <div class="ms-page-title">
                 <h2 class="page-header">Let's work together</h2>
-                <p class="page-desc">Assertively synthesize state of the art testing procedures via sticky niches.</p>
+                <p class="page-desc">Subscribe for my newsletter and Be part of my drawing, stories, Art and Exhibitions.</p>
             </div>
         </div>
         <!-- Page Content -->
