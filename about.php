@@ -18,7 +18,7 @@ add_view($conn, $visitor_ip, $page_id);
         <div class="about__img">
             <p class="mt-0 mb-0"><img class="w-100 img-thumbnail" src="https://i.imgur.com/2CA9jlb.jpg" alt="Kelechi Nwaneri"></p>
         </div>
-        <h4 style="text-align: center" class="page-header">Kelechi Nwaneri Charles</h4>
+        <h4 style="text-align: center" class="page-header">Kelechi Charles Nwaneri</h4>
     </div>
     <!-- Page Content -->
     <div class="ms-section__block">
@@ -37,7 +37,7 @@ add_view($conn, $visitor_ip, $page_id);
                     echo '<div class=" center-block">
                             <div class="about__info col-md-8">
                                 <h2 class="page-header">'.mysqli_real_escape_string($conn, $row['heading']).'</h2>
-                                <p>'.mysqli_real_escape_string($conn, sanitize($row['body'])).'</p>
+                                <p>'.$row['body'].'</p>
                             </div>
                         </div>';
                 }

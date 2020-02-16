@@ -273,7 +273,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <i class="fas fa-edit"></i> Edit Page Contents
                     </a>
                     <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">
-                        <i class="fas fa-edit"></i> Subscribers
+                        <i class="fas fa-share"></i> Exhibitions
+                    </a>
+                    <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">
+                        <i class="fas fa-mail-bulk"></i> Subscribers
                     </a>
                     <a onclick="location.assign('?logout=true')" href="#" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab6" aria-selected="false">
                         <i class="fas fa-sign-out-alt"></i> Sign out
@@ -377,8 +380,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                                 echo '
                                                                     <tr>
                                                                         <td>'.$row['id'].'</td>
-                                                                        <td>'. sanitize($row['heading']) .'</td>
-                                                                        <td>'. sanitize($row['body']) .'</td>
+                                                                        <td>'. $row['heading'] .'</td>
+                                                                        <td>'. $row['body'] .'</td>
                                                                         <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
                                                                         <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
                                                                     </tr>
@@ -404,9 +407,51 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </div>
                     </div>
 
-                    <!--                Edit Prints / News-->
-
+                    <!--                Edit Exhibitions / News-->
                     <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                        <div class="row bg-white">
+                            <main class="col-md-12 mt-5">
+                                <!-- Page Title -->
+                                <div class="ms-section__block">
+                                    <div class="ms-page-title">
+                                        <h2 class="page-header">All Exhibitions</h2>
+                                        <table id="mytable" class="table table-bordred table-striped">
+
+                                            <thead>
+                                            <th>Exhibitions</th>
+                                            <th>Date</th>
+
+                                            <th class="text-right">Action</th>
+                                            </thead>
+                                            <tbody>
+
+                                            <?php
+
+                                            $sql = "SELECT * FROM upcexhibitions";
+                                            $result = mysqli_query($conn, $sql);
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo '
+                                                    <tr>
+                                                        <td>'.$row["exhb_text"].'</td>
+                                                        <td>'.$row["exhb_date"].'</td>
+                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
+                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
+                                                    </tr>
+                                                ';
+                                            }
+                                            ?>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </main>
+                        </div>
+                    </div>
+
+
+                    <!--                Edit Prints / News-->
+                    <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
                         <div class="row bg-white">
                             <main class="col-md-12 mt-5">
                                 <!-- Page Title -->

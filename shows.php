@@ -26,86 +26,43 @@ add_view($conn, $visitor_ip, $page_id);
             </ul>
             <!-- Post Item -->
             <div class="filtr-container row">
+                <?php
+                $sql = "SELECT * FROM upcexhibitions";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '
+                        <div class="post-item col-lg-6 col-md-12 filtr-item" data-category="1">
+                            <a onclick="comingSoon(\'assets/images/shows8.jpg\', \''.$row["exhb_text"].'\')">
+                                <div class="post-item__info m-0">
+                                    <h5>'.$row["exhb_text"].'</h5>
+                                </div>
+                                <p class="mb-lg-5">'.$row["exhb_date"].'</p>
+                            </a>
+                        </div>
+                    ';
+                }
+                ?>
 
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0 mb-3" data-category="1">
-                    <a onclick="comingSoon('assets/images/shows8.jpg', '2020 - Krisitin Hjellegjerde Gallery, “ALL THE DAYS AND NIGHTS”, Old York Road, London, Britain.')">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows8.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2020 - Krisitin Hjellegjerde Gallery, “ALL THE DAYS AND NIGHTS”, Old York Road, London, Britain.</h5>
-                            <div class="post-item__date">February 27th - 18th April</div>
-                            <!--                            <div class="post-item__link">read more</div>-->
-                        </div>
-                    </a>
-                </div>
-                <!-- Post Item -->
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0 mb-3" data-category="2">
-                    <a href="#" data-type="page-transition">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows1.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2019 - SMO Contemporary Art Gallery “STASIS”, Temple Muse, Victoria Island Lagos, Nigeria.</h5>
-                            <div class="post-item__date">2019</div>
-                        </div>
-                    </a>
-                </div>
-                <!-- Post Item -->
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0" data-category="2">
-                    <a href="#" data-type="page-transition">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows3.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2019 - ODA gallery, ‘SECRET GARDEN’, Fransccheok, Western Cape, South Africa.</h5>
-                            <div class="post-item__date">2019</div>
-                        </div>
-                    </a>
-                </div>
-                <!-- Post Item -->
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0" data-category="2">
-                    <a href="#" data-type="page-transition">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows4.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2019 - ODA gallery, ‘African Symbolism and Abstraction’, Fransccheok, Western Cape, South Africa.</h5>
-                            <div class="post-item__date">2019</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0" data-category="2">
-                    <a href="#" data-type="page-transition">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows5.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2018 - Thought Pyramids Gallery “Spanish Festivals and traditional celebrations” Maitama, Abuja, Nigeria</h5>
-                            <div class="post-item__date">2018</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="post-item col-lg-6 col-md-12 filtr-item p-0" data-category="2">
-                    <a href="#" data-type="page-transition">
-                        <!--                        <div class="post-item__img">-->
-                        <!--                            <img src="assets/images/shows7.jpg" alt="img">-->
-                        <!--                        </div>-->
-                        <div class="post-item__info m-0">
-                            <h5 class="post-item__title">2016- National Festival for Art and Culture (NAFEST) “Exploring the Goldmine Inherent in Nigerian Creative Industries. Ibom hall, Uyo.</h5>
-                            <div class="post-item__date">2016</div>
-                        </div>
-                    </a>
-                </div>
+                <?php
+                $sql = "SELECT * FROM prevexhibitions";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '
+                    <div class="post-item col-lg-6 col-md-12 filtr-item" data-category="2">
+                        <a data-type="page-transition">
+                            <div class="post-item__info m-0">
+                                <h5>'.$row["exhb_text"].'</h5>
+                            </div>
+                            <p class="mb-lg-5">'.$row["exhb_date"].'</p>
+                        </a>
+                    </div>
+                    ';
+                }
+                ?>
             </div>
 
         </div>
     </div>
-    <!--    <div class="ms-section__block center-block">-->
-    <!--        <a href="#" class="ms-button" data-title="load more" data-type="page-transition">load more</a>-->
-    <!--    </div>-->
 </main>
 
 <?php
@@ -128,10 +85,10 @@ require ('./components/footer.php');
     }
     function categoryDesc(x) {
         if (x === 1){
-            category_Desc.innerHTML = "2020 - Krisitin Hjellegjerde Gallery, “ALL THE DAYS AND NIGHTS”, Old York Road, London, Britain.";
+            category_Desc.innerHTML = "";
             category_Heading.innerHTML = "Upcoming Exhibitions";
         } else if (x === 2){
-            category_Desc.innerHTML = "My previous Exhibitions from 2000 to " + current_year;
+            category_Desc.innerHTML = "";
             category_Heading.innerHTML = "Previous Exhibitions";
         }
     }
