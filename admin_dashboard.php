@@ -191,23 +191,36 @@ function sanitize($str){
     } else return addslashes($str);
 }
 
-if (isset($_GET['edit_id'])){
-    $id = $_GET['edit_id'];
+
+if (isset($_GET['table']) && $_GET['table'] === 'page_content'){
+    $_SESSION['pageContent'] = true; //Creating session
+}
+if (isset($_GET['table']) && $_GET['table'] === 'upcexhibitions' || $_GET['table'] === 'prevexhibitions'){
+    $_SESSION['exhibition'] = $table; //Creating session
 }
 
-$sql = "SELECT * FROM page_content WHERE id = '$id'";
-$result = mysqli_query($conn, $sql);
-while ($row = mysqli_fetch_assoc($result)) {
-    $heading = sanitize($row['heading']);
-    $body = sanitize($row['body']);
+if (isset($_GET['edit_id'])){
+
+    $id = $_GET['edit_id'];
+    $table = $_GET['table'];
+
+    $sql = "SELECT * FROM $table WHERE id = '$id'";
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $heading = sanitize($row['heading']);
+        $body = sanitize($row['body']);
+        $exhibit = sanitize($row['exhb_text']);
+        $date = sanitize($row['exhb_date']);
+    }
 }
+
 ?>
 
 <div class="modal fade" id="edit_content" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <button type="button" class="close m-0" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times-circle"></i></button>
                 <h4 class="page-header custom_align" id="Heading">Edit this Content</h4>
             </div>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -230,24 +243,90 @@ while ($row = mysqli_fetch_assoc($result)) {
     <!-- /.modal-dialog -->
 </div>
 
+<!-- ADD EXHIBITIONS MODAL-->
+<div class="modal fade" id="add_exhibition" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close m-0" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times-circle"></i></button>
+                <h4 class="page-header custom_align" id="Heading">Add Exhibition</h4>
+            </div>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div class="modal-body">
+                    <div id="exhibition-table" class="form-group">
+                        <label for="exampleFormControlSelect1">Where do want to add</label>
+                        <select class="form-control" name="table">
+                            <option value="upcexhibitions" selected>Upcoming Exhibition</option>
+                            <option value="prevexhibitions">Previous Exhibition</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="exhb_text" rows="4" class="form-control"><?php echo $exhibit; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="exhb_date" class="form-control " type="text" value="">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button name="add_exhibit_btn" type="submit" class="btn btn-primary btn-lg" style="width: 100%;"><span class="fas fa-save"></span> Add</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<!--EDIT EXHIBITIONS MODAL-->
+<div class="modal fade" id="edit_exhibition" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close m-0" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times-circle"></i></button>
+                <h4 class="page-header custom_align" id="Heading">Edit this Exhibition</h4>
+            </div>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="exhb_text" rows="4" class="form-control"><?php echo $exhibit; ?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="exhb_date" class="form-control " type="text" value="<?php echo $date; ?>">
+                        <input name="id" type="hidden" value="<?php echo $id; ?>">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button name="update_content_btn" type="submit" class="btn btn-primary btn-lg" style="width: 100%;"><span class="fas fa-save"></span> Update</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 
 
 <div class="modal fade" id="delete_content" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-            </div>
-            <div class="modal-body">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <div class="modal-header">
+                    <button type="button" class="close m-0" data-dismiss="modal" aria-hidden="true"><i class="fas fa-times-circle"></i></button>
+                    <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+                </div>
+                <div class="modal-body">
 
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-            </div>
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+                    <input name="id" type="hidden" value="<?php echo $_GET['delete_id']?>">
+                    <input name="table" type="hidden" value="<?php echo $_GET['table']?>">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="delete-btn"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -382,8 +461,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                                                         <td>'.$row['id'].'</td>
                                                                         <td>'. $row['heading'] .'</td>
                                                                         <td>'. $row['body'] .'</td>
-                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
-                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
+                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?q=contents&table=page_content&edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
+                                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?table=page_content&delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
                                                                     </tr>
                                                                 ';
                                                             }
@@ -414,35 +493,77 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 <!-- Page Title -->
                                 <div class="ms-section__block">
                                     <div class="ms-page-title">
-                                        <h2 class="page-header">All Exhibitions</h2>
-                                        <table id="mytable" class="table table-bordred table-striped">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h2 class="page-header">All Exhibitions</h2>
+                                            <a onclick="location.assign('?add=exhibit')" class="ms-button">Add Exhibition</a>
+                                        </div>
 
-                                            <thead>
-                                            <th>Exhibitions</th>
-                                            <th>Date</th>
+                                        <section>
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <h6 class="">Upcoming Exhibitions</h6>
+                                                <thead>
+                                                <th>No:</th>
+                                                <th>Exhibitions</th>
+                                                <th>Date</th>
 
-                                            <th class="text-right">Action</th>
-                                            </thead>
-                                            <tbody>
+                                                <th class="text-right">Action</th>
+                                                </thead>
+                                                <tbody>
 
-                                            <?php
+                                                <?php
 
-                                            $sql = "SELECT * FROM upcexhibitions";
-                                            $result = mysqli_query($conn, $sql);
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo '
+                                                $sql = "SELECT * FROM upcexhibitions";
+                                                $result = mysqli_query($conn, $sql);
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo '
+                                                        <tr>
+                                                            <td>'.$row["id"].'</td>
+                                                            <td>'.$row["exhb_text"].'</td>
+                                                            <td>'.$row["exhb_date"].'</td>
+                                                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?q=exhibit&table=upcexhibitions&edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
+                                                            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?table=upcexhibitions&delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
+                                                        </tr>
+                                                    ';
+                                                }
+                                                ?>
+                                                </tbody>
+
+                                            </table>
+                                        </section>
+
+                                        <section class="mt-5">
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <h6 class="">Previous Exhibitions</h6>
+                                                <thead>
+                                                <th>No:</th>
+                                                <th>Exhibitions</th>
+                                                <th>Date</th>
+
+                                                <th class="text-right">Action</th>
+                                                </thead>
+                                                <tbody>
+
+                                                <?php
+
+                                                $sql = "SELECT * FROM prevexhibitions";
+                                                $result = mysqli_query($conn, $sql);
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo '
                                                     <tr>
+                                                        <td>'.$row["id"].'</td>
                                                         <td>'.$row["exhb_text"].'</td>
                                                         <td>'.$row["exhb_date"].'</td>
-                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
-                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
+                                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button onclick="location.assign(\'?q=exhibit&table=prevexhibitions&edit_id='.$row['id'].'\')" ><span class="fas fa-edit" style="color: #6591c7;"></span></button></p></td>
+                                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button onclick="location.assign(\'?table=prevexhibitions&delete_id='.$row['id'].'\')" ><span class="fas fa-trash"></span></button></p></td>
                                                     </tr>
                                                 ';
-                                            }
-                                            ?>
-                                            </tbody>
+                                                }
+                                                ?>
+                                                </tbody>
 
-                                        </table>
+                                            </table>
+                                        </section>
+
                                     </div>
                                 </div>
                             </main>

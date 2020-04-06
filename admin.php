@@ -49,9 +49,12 @@ if($_SESSION['admin_session']){
     ';
 }
 ?>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="./js/imgur.js"></script>
 <script type="text/javascript" src="./js/upload.js"></script>
 <script>
@@ -70,23 +73,57 @@ if($_SESSION['admin_session']){
     }
     if (document.URL.indexOf("edit=true") >= 0){
         $('#editModal').modal('show');
+        $('#faq-tabs a:nth-child(2)')[0].click();
     }
     if (document.URL.indexOf("editId") >= 0){
         $('#editSelectedModal').modal('show');
+        $('#faq-tabs a:nth-child(2)')[0].click();
     }
     if (document.URL.indexOf("painting") >= 0){
         $("#check1").attr("checked", true);
     }
     if (document.URL.indexOf("image_slider") >= 0){
-            $("#check2").attr("checked", true);
+        $("#check2").attr("checked", true);
     }
 
-    if (document.URL.indexOf("edit_id") >= 0){
+    if (document.URL.indexOf("?q=contents") > 0){
         $('#edit_content').modal('show');
-        $('#tab3')[0].click();
+        $('#faq-tabs a:nth-child(3)')[0].click();
     }
+
+    if (document.URL.indexOf("?add=exhibit") > 0){
+        $('#add_exhibition').modal('show');
+        $('#faq-tabs a:nth-child(4)')[0].click();
+    }
+
+    if (document.URL.indexOf("?q=exhibit") > 0){
+        $('#edit_exhibition').modal('show');
+        $('#faq-tabs a:nth-child(4)')[0].click();
+    }
+
+    $('.close').on('click', function () {
+        console.log('clicked modal');
+
+        $.ajax( { type : 'POST',
+            data : { },
+            url  : 'controller/sessions.php',              // <=== CALL THE PHP FUNCTION HERE.
+            success: function ( data ) {
+                // alert( data );               // <=== VALUE RETURNED FROM FUNCTION.
+            },
+            error: function ( xhr ) {
+                alert( "error" );
+            }
+        });
+    });
+
     if (document.URL.indexOf("delete_id") >= 0){
         $('#delete_content').modal('show');
+
+        if (document.URL.indexOf("exhibitions") >= 0){
+            $('#faq-tabs a:nth-child(4)')[0].click();
+        } else if (document.URL.indexOf("page_content") >= 0){
+            $('#faq-tabs a:nth-child(3)')[0].click();
+        }
     }
 
     function showCategory() {
@@ -118,6 +155,25 @@ if($_SESSION['admin_session']){
             timer: 2000
         })
     }
+    if(queryParameters().success == "Deleted"){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+        Toast.fire({
+            icon: 'warning',
+            title: 'Deleted Successfully'
+        });
+        $('#faq-tabs a:nth-child(4)')[0].click();
+    }
+
     if (queryParameters().success === "contentupdated"){
         Swal.fire({
             position: 'center',

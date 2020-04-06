@@ -131,7 +131,22 @@ if ($_GET['deleteId']) {
     $deleteQuery = "DELETE FROM $table WHERE id = '$id'";
     if (mysqli_query($conn, $deleteQuery)){
         mysqli_query($conn,"ALTER TABLE $table AUTO_INCREMENT = 0");
-        header('location: ?success=imageDeleted');
+        header('location: ?success=Deleted');
+        exit();
+    } else {
+        header('location: ?error=notdeleted');
+        die($deleteQuery);
+    }
+}
+
+if (isset($_POST['delete-btn'])){
+    $id = $_POST['id'];
+    $table = $_POST['table'];
+
+    $deleteQuery = "DELETE FROM $table WHERE id = '$id'";
+    if (mysqli_query($conn, $deleteQuery)){
+        mysqli_query($conn,"ALTER TABLE $table AUTO_INCREMENT = 0");
+        header('location: ?success=Deleted');
         exit();
     } else {
         header('location: ?error=notdeleted');
@@ -155,20 +170,54 @@ function subcribe_email($conn, $email, $visitor_ip){
 if (isset($_POST['contact-btn'])){
     echo 'data received!';
 }
+//ADD EXHIBITION
+if (isset($_POST['add_exhibit_btn'])){
+    $exhb_text = mysqli_real_escape_string($conn, $_POST['exhb_text']);
+    $exhb_date = mysqli_real_escape_string($conn, $_POST['exhb_date']);
+    $table = mysqli_real_escape_string($conn, $_POST['table']);
 
+    if (!empty($exhb_text)){
+        $query = "INSERT INTO $table (exhb_text, exhb_date) VALUES('$exhb_text', '$exhb_date')";
+        $result = mysqli_query($conn, $query);
+        if($result){
+            header("Location: ?success=exhibitAdded");
+        }
+    } else {
+        header("Location: ?error=empty");
+    }
+}
 //UPDATING PAGE CONTENT
 if (isset($_POST['update_content_btn'])){
     $heading = mysqli_real_escape_string($conn, $_POST['heading']);
     $body = mysqli_real_escape_string($conn, $_POST['body']);
+    $exhb_text = mysqli_real_escape_string($conn, $_POST['exhb_text']);
+    $exhb_date = mysqli_real_escape_string($conn, $_POST['exhb_date']);
     $id = $_POST['id'];
+    $table = $_SESSION['exhibition'];
 
-    $updateQuery = mysqli_query($conn, "UPDATE page_content SET heading = '$heading', body = '$body' WHERE id = '$id'");
-    if ($updateQuery) {
-        header('location: ?success=contentupdated');
-        exit();
-    } else {
-        header('location: ?error=contentnotedited');
-        exit();
+    if (isset($_SESSION['pageContent'])){
+        $updateQuery = mysqli_query($conn, "UPDATE page_content SET heading = '$heading', body = '$body' WHERE id = '$id'");
+        if ($updateQuery) {
+            header('location: ?success=contentupdated');
+            unset($_SESSION['pageContent']);
+            exit();
+        } else {
+            header('location: ?error=contentnotedited');
+            unset($_SESSION['pageContent']);
+            exit();
+        }
+    }
+    if(isset($table)){
+        $updateQuery = mysqli_query($conn, "UPDATE $table SET exhb_text = '$exhb_text', exhb_date = '$exhb_date' WHERE id = '$id'");
+        if ($updateQuery) {
+            header('location: ?success=contentupdated');
+            unset($table);
+            exit();
+        } else {
+            header('location: ?error=contentnotedited');
+            unset($table);
+            exit();
+        }
     }
 }
 //COUNT TOTAL UPLOADED IMAGES

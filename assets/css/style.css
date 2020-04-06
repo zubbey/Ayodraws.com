@@ -636,7 +636,9 @@ a.nav-link {
 /**
  * 4. Home Slider
  */
-
+/*.modal-header .close{*/
+/*    m*/
+/*}*/
 .home-slider {
     padding-top: 0 !important;
 }

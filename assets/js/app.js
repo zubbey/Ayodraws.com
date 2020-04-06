@@ -89,6 +89,16 @@ if (queryParameters().success === "subscribed"){
     });
     $('#home_subscribe').html('<p>Thanks for subscribing</p>');
 }
+if (queryParameters().success === "exhibitAdded"){
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'New Exhibition Added',
+        showConfirmButton: false,
+        timer: 4000
+    });
+    $('#faq-tabs a:nth-child(4)')[0].click();
+}
 if (queryParameters().error === "empty"){
     Swal.fire({
         position: 'center',
